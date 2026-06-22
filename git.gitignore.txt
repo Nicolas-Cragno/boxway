@@ -1,0 +1,14 @@
+# Ejecutables
+*.exe
+
+# Objetos compilados
+*.o
+*.obj
+
+# Carpetas de compilación
+bin/
+obj/
+build/
+
+# Archivos temporales
+*.layout
