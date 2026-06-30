@@ -15,7 +15,7 @@ int main()
     Pelea pelea(window);
     if (!pelea.cargar()) return -1;
 
-    bool enMenu = true;  // empieza en el menu
+    bool enMenu = true;
 
     while (window.isOpen())
     {
@@ -36,8 +36,9 @@ int main()
         if (enMenu)
         {
             int op = menu.getSeleccion();
-            if (op == 0) enMenu = false;  // Pelear -> entra a la pelea
-            if (op == 4) window.close();  // Salir
+            if (op == 0) { pelea.reiniciar(false); enMenu = false; } // Pelear
+            if (op == 1) { pelea.reiniciar(true);  enMenu = false; } // Entrenar
+            if (op == 4) window.close();                              // Salir
 
             window.clear();
             menu.dibujar();
@@ -49,7 +50,7 @@ int main()
             pelea.dibujar();
 
             if (pelea.termino())
-                enMenu = true;  // Escape -> vuelve al menu
+                enMenu = true;
         }
     }
 

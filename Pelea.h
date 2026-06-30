@@ -8,6 +8,7 @@ public:
     Pelea(sf::RenderWindow& ventana);
 
     bool cargar();
+    void reiniciar(bool entrenamiento);
     void manejarEvento(const sf::Event& evento);
     void actualizar();
     void dibujar();
@@ -21,4 +22,13 @@ private:
     Rival _rival;
 
     bool _termino;
+    bool _entrenamiento;
+
+    sf::RectangleShape _bgPublico;
+    sf::RectangleShape _bgCanvas;
+    sf::RectangleShape _bgBorde;
+    sf::RectangleShape _bgCuerdas[3];
+
+    sf::Texture _texEntrenamiento;
+    sf::Sprite  _spEntrenamiento;
 };

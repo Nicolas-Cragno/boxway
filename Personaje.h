@@ -33,12 +33,13 @@ class Personaje {
         void atacar(Personaje& enemigo);
         void recibirDanio(float danio);
         float getVida();
+        void reiniciar(float px, float py);
         float getX(); // para automatizacion del rival
         float getY(); // para automatizacion del rival
         float getPosicion();
         bool estaAtacando();
         bool estaDefendiendo();
         void dibujar(sf::RenderWindow& ventana);
-        void orientacion(bool); // positiva se posiciona a la izq y negativo a la derecha
+        virtual void orientacion(bool); // positiva se posiciona a la izq y negativo a la derecha
         sf::Sprite& getSprite();
 };

@@ -5,25 +5,40 @@ Menu::Menu(sf::RenderWindow& ventana, sf::Font& fuente)
 {
     std::vector<std::string> opciones = { "Pelear", "Entrenar", "Estadisticas", "Creditos", "Salir" };
 
-    // Fondo
+    if (_texFondo.loadFromFile("./backgrounds/fondo_menu.png")) {
+        sf::Vector2u sz = _texFondo.getSize();
+        _spFondo.setTexture(_texFondo);
+        _spFondo.setScale(1600.f / sz.x, 800.f / sz.y);
+    }
     _fondo.setSize(sf::Vector2f(1600, 800));
-    _fondo.setFillColor(sf::Color(20, 20, 40));
+    _fondo.setFillColor(sf::Color(0, 0, 0, 60));
 
-    // Titulo
     _titulo.setFont(fuente);
-    _titulo.setString("MENU PRINCIPAL");
-    _titulo.setCharacterSize(40);
+    _titulo.setString("BOXWAY");
+    _titulo.setCharacterSize(80);
     _titulo.setFillColor(sf::Color(220, 180, 50));
     _titulo.setStyle(sf::Text::Bold);
-    _titulo.setPosition(200, 50);
+    sf::FloatRect tb = _titulo.getLocalBounds();
+    _titulo.setOrigin(tb.left + tb.width / 2.f, tb.top + tb.height / 2.f);
+    _titulo.setPosition(800.f, 160.f);
 
-    // Textos de opciones
+    _linea.setSize(sf::Vector2f(420.f, 3.f));
+    _linea.setFillColor(sf::Color(220, 180, 50, 160));
+    _linea.setOrigin(210.f, 1.5f);
+    _linea.setPosition(800.f, 230.f);
+
+    _resaltado.setFillColor(sf::Color(220, 180, 50, 35));
+    _resaltado.setOutlineColor(sf::Color(220, 180, 50, 100));
+    _resaltado.setOutlineThickness(1.f);
+
     for (int i = 0; i < 5; i++) {
         sf::Text t;
         t.setFont(fuente);
         t.setString(opciones[i]);
-        t.setCharacterSize(30);
-        t.setPosition(240, 150 + i * 60);
+        t.setCharacterSize(34);
+        sf::FloatRect r = t.getLocalBounds();
+        t.setOrigin(r.left + r.width / 2.f, r.top + r.height / 2.f);
+        t.setPosition(800.f, 310.f + i * 72.f);
         _textos.push_back(t);
     }
 }
@@ -45,19 +60,21 @@ void Menu::dibujar()
 {
     for (int i = 0; i < 5; i++) {
         if (i == _seleccion)
-        {
-            _textos[i].setFillColor(sf::Color(220, 180, 50)); // dorado para opcion elegida
-        }
+            _textos[i].setFillColor(sf::Color(220, 180, 50));
         else
-        {
-            _textos[i].setFillColor(sf::Color(200, 200, 200)); // gris para no elegidas
-        }
-
+            _textos[i].setFillColor(sf::Color(180, 180, 180));
     }
 
+    sf::FloatRect r = _textos[_seleccion].getGlobalBounds();
+    _resaltado.setSize(sf::Vector2f(r.width + 60.f, 52.f));
+    _resaltado.setOrigin(_resaltado.getSize().x / 2.f, _resaltado.getSize().y / 2.f);
+    _resaltado.setPosition(_textos[_seleccion].getPosition());
+
+    _ventana.draw(_spFondo);
     _ventana.draw(_fondo);
     _ventana.draw(_linea);
     _ventana.draw(_titulo);
+    _ventana.draw(_resaltado);
     for (int i = 0; i < 5; i++)
         _ventana.draw(_textos[i]);
 }

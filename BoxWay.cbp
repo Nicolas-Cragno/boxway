@@ -31,7 +31,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
-			<Add directory="C:/SFML/include" />
+			<Add directory="./SFML/include" />
 		</Compiler>
 		<Linker>
 			<Add library="sfml-graphics-d" />
@@ -47,6 +47,10 @@
 		<Unit filename="Rival.h" />
 		<Unit filename="Rocky.cpp" />
 		<Unit filename="Rocky.h" />
+		<Unit filename="Menu.cpp" />
+		<Unit filename="Menu.h" />
+		<Unit filename="Pelea.cpp" />
+		<Unit filename="Pelea.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

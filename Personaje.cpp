@@ -147,15 +147,24 @@ void Personaje::dibujar(sf::RenderWindow& ventana)
 void Personaje::orientacion(bool estado)
 {
     if(estado){
-        imagen.getSprite().setScale(5.f,5.f);
+        imagen.getSprite().setScale(3.5f,3.5f);
     } else {
-        imagen.getSprite().setScale(-5.f,5.f);
+        imagen.getSprite().setScale(-3.5f,3.5f);
     }
 }
 
 float Personaje::getVida()
 {
     return vida;
+}
+
+void Personaje::reiniciar(float px, float py)
+{
+    vida = 100;
+    atacando = false;
+    defendiendo = false;
+    accionActual = "guardia";
+    setPosicion(px, py);
 }
 
 float Personaje::getX()

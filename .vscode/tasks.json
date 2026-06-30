@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compilar BoxWay",
+            "type": "shell",
+            "command": "C:/Windows/System32/cmd.exe",
+            "args": [
+                "/C",
+                "\"C:/Program Files/CodeBlocks/MinGW/bin/g++.exe\" -g main.cpp Menu.cpp Pelea.cpp Personaje.cpp Rocky.cpp Rival.cpp ImagenPersonaje.cpp -I./SFML/include -L./SFML/lib -lsfml-graphics-d -lsfml-window-d -lsfml-system-d -o bin/Debug/BoxWay.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$gcc",
+            "detail": "Compila el proyecto con MinGW y SFML debug"
+        }
+    ]
+}

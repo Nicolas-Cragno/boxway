@@ -9,8 +9,11 @@ class Menu {
         int _seleccion;
         int _confirmada;
         bool _salir;
+        sf::Texture _texFondo;
+        sf::Sprite  _spFondo;
         sf::RectangleShape _fondo;
         sf::RectangleShape _linea;
+        sf::RectangleShape _resaltado;
         sf::Text _titulo;
         std::vector<sf::Text> _textos;
 
