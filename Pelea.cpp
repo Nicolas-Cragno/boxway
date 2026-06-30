@@ -1,7 +1,10 @@
 #include "Pelea.h"
 
 Pelea::Pelea(sf::RenderWindow& ventana)
-    : _ventana(ventana), _termino(false), _entrenamiento(false)
+    // Rival no tiene constructor vacio, hay que darle los stats aca.
+    // El orden de la lista sigue el orden de declaracion en Pelea.h.
+    : _ventana(ventana), _rival(6, 6, 2), // Goyo Peralta: fuerza, resistencia, velocidad
+      _termino(false), _entrenamiento(false)
 {
     _bgPublico.setSize(sf::Vector2f(1600, 560));
     _bgPublico.setFillColor(sf::Color(25, 20, 45));
@@ -61,11 +64,10 @@ void Pelea::actualizar()
     if (!_entrenamiento)
         _rival.autoActualizar(_rocky);
 
-    // Rocky golpea al rival
+    // Rocky golpea al rival (hitbox y no sprite completo: el sprite tiene mucho aire transparente)
     if (_rocky.estaAtacando())
     {
-        if (_rocky.getSprite().getGlobalBounds().intersects(
-                _rival.getSprite().getGlobalBounds()))
+        if (_rocky.getHitbox().intersects(_rival.getHitbox()))
         {
             _rocky.atacar(_rival);
         }
@@ -74,14 +76,15 @@ void Pelea::actualizar()
     // Rival golpea a Rocky (solo en pelea, no en entrenamiento)
     if (!_entrenamiento && _rival.estaAtacando())
     {
-        if (_rival.getSprite().getGlobalBounds().intersects(
-                _rocky.getSprite().getGlobalBounds()))
+        if (_rival.getHitbox().intersects(_rocky.getHitbox()))
         {
             _rival.atacar(_rocky);
         }
     }
 
-    if (_rocky.getVida() <= 0 || _rival.getVida() <= 0)
+    // En entrenamiento no hay ganador: se sale solo con Escape.
+    // Sin este !_entrenamiento, matar al muñeco cortaba el entrenamiento a los pocos golpes.
+    if (!_entrenamiento && (_rocky.getVida() <= 0 || _rival.getVida() <= 0))
         _termino = true;
 }
 

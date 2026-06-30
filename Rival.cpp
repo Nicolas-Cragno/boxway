@@ -2,8 +2,10 @@
 #include <cstdlib>
 #include <ctime>
 
-Rival::Rival()
+Rival::Rival(float fuerzaRival, float resistenciaRival, float velocidadRival)
 {
+    setStats(fuerzaRival, resistenciaRival, velocidadRival);
+
     setPosicion(700,300);
 
     golpesCombo = 0;
@@ -11,6 +13,10 @@ Rival::Rival()
     retrocediendo = false;
 
     distanciaRetroceso = 0;
+
+    jugadorAtacabaAntes = false;
+    cubreEsteGolpe = false;
+    probCubrirse = 40; // fijo por ahora; podria variar por rival (Ali cubriria mas que Goyo)
 }
 
 void Rival::autoActualizar(Personaje& jugador)
@@ -73,6 +79,34 @@ void Rival::autoActualizar(Personaje& jugador)
         return;
     }
 
+    /// DEFENSA
+    /// La decision se toma UNA VEZ por golpe del jugador, en el frame en que lo inicia.
+    /// Si tirara rand() en cada frame, la decision cambiaria 60 veces por segundo
+    /// y la guardia parpadearia.
+
+    bool jugadorAtacaAhora = jugador.estaAtacando();
+
+    // el golpe RECIEN empieza si ahora ataca y en el frame anterior no
+    if(jugadorAtacaAhora && !jugadorAtacabaAntes)
+    {
+        cubreEsteGolpe = (rand() % 100) < probCubrirse;
+    }
+
+    jugadorAtacabaAntes = jugadorAtacaAhora;
+
+    float distanciaAbs = distancia;
+    if(distanciaAbs < 0) distanciaAbs = -distanciaAbs; // distancia sin signo
+
+    // se cubre solo si el golpe puede alcanzarlo y no esta a mitad de un golpe propio
+    if(jugadorAtacaAhora && cubreEsteGolpe && !atacando && distanciaAbs < 200)
+    {
+        defendiendo = true;
+
+        accionActual = "cover";
+
+        return; // mientras se cubre no camina ni ataca
+    }
+
     /// ACERCARSE
 
     if(distancia > 120)
@@ -100,6 +134,7 @@ void Rival::autoActualizar(Personaje& jugador)
         )
         {
             atacando = true;
+            golpeYaImpacto = false; // golpe nuevo: todavia no le pego a nadie
 
             combinacion();
 
