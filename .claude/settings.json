@@ -5,6 +5,7 @@
       "Bash(git commit -m ' *)",
       "Bash(git push *)"
     ]
+<<<<<<< HEAD
   },
   "hooks": {
     "PreToolUse": [
@@ -18,5 +19,7 @@
         ]
       }
     ]
+=======
+>>>>>>> 509e7e5f4f0fe2e3cf8b43980243ecd12e1c2c32
   }
 }
